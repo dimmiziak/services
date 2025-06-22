@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dimmi Ziak — Creative Learning Guide</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * {
       margin: 0;
@@ -27,11 +28,17 @@
       background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(10px);
       border-radius: 20px;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
       max-width: 900px;
       width: 100%;
       overflow: hidden;
       position: relative;
+      transition: transform 0.3s ease;
+    }
+    
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 25px 50px rgba(0,0,0,0.2);
     }
     
     .card::before {
@@ -40,37 +47,53 @@
       top: 0;
       left: 0;
       right: 0;
-      height: 4px;
+      height: 5px;
       background: linear-gradient(90deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      z-index: 2;
     }
     
     .header {
       padding: 40px 40px 20px;
       text-align: center;
       background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.3), transparent);
     }
     
     .name {
       font-size: 2.8rem;
-      font-weight: 700;
+      font-weight: 800;
       background: linear-gradient(135deg, #667eea, #764ba2);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
       margin-bottom: 10px;
+      letter-spacing: -0.5px;
     }
     
     .tagline {
       font-size: 1.3rem;
       color: #5a6c7d;
       margin-bottom: 15px;
+      font-weight: 500;
     }
     
     .language-switch {
       display: flex;
       justify-content: center;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 25px;
+      flex-wrap: wrap;
     }
     
     .lang-btn {
@@ -81,7 +104,8 @@
       border-radius: 25px;
       cursor: pointer;
       transition: all 0.3s ease;
-      font-weight: 500;
+      font-weight: 600;
+      font-size: 0.9rem;
     }
     
     .lang-btn.active {
@@ -98,10 +122,55 @@
     .content {
       display: none;
       padding: 30px 40px 40px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
     }
     
     .content.active {
       display: block;
+    }
+    
+    .about-section {
+      background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 30px;
+      border-left: 4px solid #667eea;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .about-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+    }
+    
+    .about-section h2 {
+      color: #2c3e50;
+      margin-bottom: 15px;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .about-section h2 i {
+      color: #667eea;
+    }
+    
+    .about-section p {
+      color: #5a6c7d;
+      margin-bottom: 15px;
+      line-height: 1.7;
     }
     
     .services {
@@ -165,12 +234,16 @@
       color: #5a6c7d;
       margin-bottom: 15px;
       font-size: 0.95rem;
+      line-height: 1.7;
     }
     
     .price {
       font-weight: 600;
       color: #27ae60;
       font-size: 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 5px;
     }
     
     .cta-section {
@@ -180,16 +253,33 @@
       border-radius: 15px;
       text-align: center;
       margin-bottom: 30px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
     }
     
     .cta-section h2 {
       margin-bottom: 15px;
       font-size: 1.5rem;
+      position: relative;
     }
     
     .cta-section p {
       margin-bottom: 20px;
       opacity: 0.9;
+      position: relative;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
     }
     
     .contacts {
@@ -210,6 +300,24 @@
       border-radius: 25px;
       transition: all 0.3s ease;
       font-weight: 500;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .contact-btn::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .contact-btn:hover::before {
+      opacity: 1;
     }
     
     .contact-btn:hover {
@@ -224,7 +332,31 @@
       background: #f8f9fa;
       padding: 20px;
       border-radius: 10px;
-      margin-top: 20px;
+      margin-top: 30px;
+      position: relative;
+      border-left: 4px solid #667eea;
+    }
+    
+    .testimonial::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      left: 15px;
+      font-size: 3rem;
+      color: rgba(102, 126, 234, 0.2);
+      font-family: serif;
+      line-height: 1;
+    }
+    
+    .testimonial::after {
+      content: '"';
+      position: absolute;
+      bottom: -15px;
+      right: 15px;
+      font-size: 3rem;
+      color: rgba(102, 126, 234, 0.2);
+      font-family: serif;
+      line-height: 1;
     }
     
     @media (max-width: 768px) {
@@ -253,6 +385,10 @@
         flex-direction: column;
         align-items: center;
       }
+      
+      .about-section, .cta-section {
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -265,6 +401,7 @@
       <div class="language-switch">
         <button class="lang-btn active" onclick="switchLanguage('en')">English</button>
         <button class="lang-btn" onclick="switchLanguage('ru')">Русский</button>
+        <button class="lang-btn" onclick="switchLanguage('uk')">Українська</button>
         <button class="lang-btn" onclick="switchLanguage('de')">Deutsch</button>
       </div>
     </div>
@@ -276,57 +413,64 @@
         <p>I help creative minds learn languages through art, overcome creative blocks, and find their authentic path in life.</p>
       </div>
       
+      <div class="about-section">
+        <h2><i class="fas fa-user"></i> Who I Am</h2>
+        <p>I'm Dimmi Ziak, a multidisciplinary creator, teacher, and guide for those who want to grow, express themselves, and explore the world more deeply.</p>
+        <p>My mission is to help people through art, languages, psychology, and technology. I believe learning should be joyful, creative, and deeply personal.</p>
+        <p>As an artist myself, I understand the creative struggle and can guide you through it with empathy and expertise.</p>
+      </div>
+      
       <div class="services">
         <div class="service">
           <span class="service-icon">🌍</span>
           <h3>Creative Language Learning</h3>
           <p>English & German through art, music, and meaningful conversations. No boring grammar drills.</p>
-          <div class="price">From $20/hour • Free trial session</div>
+          <div class="price"><i class="fas fa-tag"></i> From $20/hour • Free trial session</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🎨</span>
           <h3>Artist Mentorship</h3>
           <p>Guidance for emerging artists to find their voice, develop style, and overcome creative blocks.</p>
-          <div class="price">From $25/session</div>
+          <div class="price"><i class="fas fa-tag"></i> From $25/session</div>
         </div>
         
         <div class="service">
           <span class="service-icon">💭</span>
           <h3>Supportive Conversations</h3>
           <p>Safe space for sensitive souls. Deep talks about life, growth, and finding your path.</p>
-          <div class="price">$15-35/session (sliding scale)</div>
+          <div class="price"><i class="fas fa-tag"></i> $15-35/session (sliding scale)</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🖥️</span>
           <h3>Tech & Digital Skills</h3>
           <p>Learn technology through creativity. Perfect for artists entering the digital world.</p>
-          <div class="price">From $30/session</div>
+          <div class="price"><i class="fas fa-tag"></i> From $30/session</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🌟</span>
           <h3>Personal Branding</h3>
           <p>Help artists and creatives build authentic online presence and find their audience.</p>
-          <div class="price">From $35/session</div>
+          <div class="price"><i class="fas fa-tag"></i> From $35/session</div>
         </div>
       </div>
       
       <div class="contacts">
         <a href="https://t.me/dmziak" class="contact-btn" target="_blank">
-          📱 Telegram
+          <i class="fab fa-telegram"></i> Telegram
         </a>
         <a href="https://instagram.com/dimmiziak" class="contact-btn" target="_blank">
-          📸 Instagram
+          <i class="fab fa-instagram"></i> Instagram
         </a>
         <a href="mailto:dimmi@example.com" class="contact-btn">
-          ✉️ Email
+          <i class="fas fa-envelope"></i> Email
         </a>
       </div>
       
       <div class="testimonial">
-        "Create boldly. Learn with curiosity. Explore yourself deeply."
+        Create boldly. Learn with curiosity. Explore yourself deeply.
       </div>
     </div>
 
@@ -337,57 +481,132 @@
         <p>Помогаю творческим людям изучать языки через искусство, преодолевать блоки и находить свой путь.</p>
       </div>
       
+      <div class="about-section">
+        <h2><i class="fas fa-user"></i> Кто я</h2>
+        <p>Я Dimmi Ziak, мультидисциплинарный создатель, учитель и проводник для тех, кто хочет расти, выражать себя и глубже исследовать мир.</p>
+        <p>Моя миссия — помогать людям через искусство, языки, психологию и технологии. Я верю, что обучение должно быть радостным, творческим и глубоко личным.</p>
+        <p>Как художник, я понимаю творческие трудности и могу провести вас через них с эмпатией и экспертизой.</p>
+      </div>
+      
       <div class="services">
         <div class="service">
           <span class="service-icon">🌍</span>
           <h3>Языки через творчество</h3>
           <p>Английский и немецкий через музыку, искусство, живые беседы. Без зубрёжки и страха ошибок.</p>
-          <div class="price">От 20 CHF/час • Пробная сессия бесплатно</div>
+          <div class="price"><i class="fas fa-tag"></i> От 20 CHF/час • Пробная сессия бесплатно</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🎨</span>
           <h3>Творческое наставничество</h3>
           <p>Помогаю начинающим артистам найти свой голос, развить стиль, преодолеть творческие блоки.</p>
-          <div class="price">От 25 CHF/сессия</div>
+          <div class="price"><i class="fas fa-tag"></i> От 25 CHF/сессия</div>
         </div>
         
         <div class="service">
           <span class="service-icon">💭</span>
           <h3>Поддерживающие беседы</h3>
           <p>Безопасное пространство для чувствительных душ. Глубокие разговоры о жизни и поиске себя.</p>
-          <div class="price">15-35 CHF/сессия (гибкая шкала)</div>
+          <div class="price"><i class="fas fa-tag"></i> 15-35 CHF/сессия (гибкая шкала)</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🖥️</span>
           <h3>Технологии и диджитал</h3>
           <p>Изучаем технологии через творчество. Идеально для артистов, входящих в цифровой мир.</p>
-          <div class="price">От 30 CHF/сессия</div>
+          <div class="price"><i class="fas fa-tag"></i> От 30 CHF/сессия</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🌟</span>
           <h3>Личный бренд</h3>
           <p>Помогаю артистам и творческим личностям строить аутентичное присутствие онлайн.</p>
-          <div class="price">От 35 CHF/сессия</div>
+          <div class="price"><i class="fas fa-tag"></i> От 35 CHF/сессия</div>
         </div>
       </div>
       
       <div class="contacts">
         <a href="https://t.me/dmziak" class="contact-btn" target="_blank">
-          📱 Telegram
+          <i class="fab fa-telegram"></i> Telegram
         </a>
         <a href="https://instagram.com/dimmiziak" class="contact-btn" target="_blank">
-          📸 Instagram
+          <i class="fab fa-instagram"></i> Instagram
         </a>
         <a href="mailto:dimmi@example.com" class="contact-btn">
-          ✉️ Email
+          <i class="fas fa-envelope"></i> Email
         </a>
       </div>
       
       <div class="testimonial">
-        "Твори смело. Учись с интересом. Исследуй себя глубоко."
+        Твори смело. Учись с интересом. Исследуй себя глубоко.
+      </div>
+    </div>
+
+    <!-- Ukrainian Content -->
+    <div class="content" id="content-uk">
+      <div class="cta-section">
+        <h2>🌟 Перетвори навчання на творчість</h2>
+        <p>Допомагаю творчим людям вивчати мови через мистецтво, подолати блоки та знайти свій шлях.</p>
+      </div>
+      
+      <div class="about-section">
+        <h2><i class="fas fa-user"></i> Хто я</h2>
+        <p>Я Dimmi Ziak, мультидисциплінарний творець, вчитель і провідник для тих, хто хоче рости, висловлювати себе і глибше досліджувати світ.</p>
+        <p>Моя місія — допомагати людям через мистецтво, мови, психологію та технології. Я вірю, що навчання має бути радісним, творчим і глибоко особистим.</p>
+        <p>Як митець, я розумію творчі труднощі і можу провести вас через них з емпатією та експертизою.</p>
+      </div>
+      
+      <div class="services">
+        <div class="service">
+          <span class="service-icon">🌍</span>
+          <h3>Мови через творчість</h3>
+          <p>Англійська та німецька через музику, мистецтво, живі бесіди. Без зубріння та страху помилок.</p>
+          <div class="price"><i class="fas fa-tag"></i> Від 20 CHF/година • Пробний урок безкоштовно</div>
+        </div>
+        
+        <div class="service">
+          <span class="service-icon">🎨</span>
+          <h3>Творче менторство</h3>
+          <p>Допомога молодим митцям знайти свій голос, розвинути стиль, подолати творчі блоки.</p>
+          <div class="price"><i class="fas fa-tag"></i> Від 25 CHF/сесія</div>
+        </div>
+        
+        <div class="service">
+          <span class="service-icon">💭</span>
+          <h3>Підтримуючі бесіди</h3>
+          <p>Безпечний простір для чутливих душ. Глибокі розмови про життя та пошук себе.</p>
+          <div class="price"><i class="fas fa-tag"></i> 15-35 CHF/сесія (гнучка шкала)</div>
+        </div>
+        
+        <div class="service">
+          <span class="service-icon">🖥️</span>
+          <h3>Технології та цифрові навички</h3>
+          <p>Вивчаємо технології через творчість. Ідеально для митців у цифровому світі.</p>
+          <div class="price"><i class="fas fa-tag"></i> Від 30 CHF/сесія</div>
+        </div>
+        
+        <div class="service">
+          <span class="service-icon">🌟</span>
+          <h3>Особистий бренд</h3>
+          <p>Допомога митцям і творчим особистостям будувати автентичну присутність онлайн.</p>
+          <div class="price"><i class="fas fa-tag"></i> Від 35 CHF/сесія</div>
+        </div>
+      </div>
+      
+      <div class="contacts">
+        <a href="https://t.me/dmziak" class="contact-btn" target="_blank">
+          <i class="fab fa-telegram"></i> Telegram
+        </a>
+        <a href="https://instagram.com/dimmiziak" class="contact-btn" target="_blank">
+          <i class="fab fa-instagram"></i> Instagram
+        </a>
+        <a href="mailto:dimmi@example.com" class="contact-btn">
+          <i class="fas fa-envelope"></i> Email
+        </a>
+      </div>
+      
+      <div class="testimonial">
+        Твори сміливо. Вчись з цікавістю. Досліджуй себе глибоко.
       </div>
     </div>
 
@@ -398,57 +617,64 @@
         <p>Ich helfe kreativen Menschen, Sprachen durch Kunst zu lernen und ihren authentischen Weg zu finden.</p>
       </div>
       
+      <div class="about-section">
+        <h2><i class="fas fa-user"></i> Wer ich bin</h2>
+        <p>Ich bin Dimmi Ziak, ein multidisziplinärer Schöpfer, Lehrer und Begleiter für diejenigen, die wachsen, sich ausdrücken und die Welt tiefer erforschen möchten.</p>
+        <p>Meine Mission ist es, Menschen durch Kunst, Sprachen, Psychologie und Technologie zu helfen. Ich glaube, dass Lernen freudvoll, kreativ und zutiefst persönlich sein sollte.</p>
+        <p>Als Künstler verstehe ich den kreativen Kampf und kann dich mit Einfühlungsvermögen und Fachwissen begleiten.</p>
+      </div>
+      
       <div class="services">
         <div class="service">
           <span class="service-icon">🌍</span>
           <h3>Kreatives Sprachenlernen</h3>
           <p>Englisch & Deutsch durch Kunst, Musik und bedeutsame Gespräche. Keine langweilige Grammatik.</p>
-          <div class="price">Ab 20 CHF/Stunde • Kostenlose Probestunde</div>
+          <div class="price"><i class="fas fa-tag"></i> Ab 20 CHF/Stunde • Kostenlose Probestunde</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🎨</span>
           <h3>Künstler-Mentoring</h3>
           <p>Begleitung für aufstrebende Künstler beim Finden ihrer Stimme und Überwinden kreativer Blockaden.</p>
-          <div class="price">Ab 25 CHF/Session</div>
+          <div class="price"><i class="fas fa-tag"></i> Ab 25 CHF/Session</div>
         </div>
         
         <div class="service">
           <span class="service-icon">💭</span>
           <h3>Unterstützende Gespräche</h3>
           <p>Sicherer Raum für sensible Seelen. Tiefe Gespräche über Leben, Wachstum und Selbstfindung.</p>
-          <div class="price">15-35 CHF/Session (flexible Skala)</div>
+          <div class="price"><i class="fas fa-tag"></i> 15-35 CHF/Session (flexible Skala)</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🖥️</span>
           <h3>Technologie & Digital</h3>
           <p>Technologie durch Kreativität lernen. Perfekt für Künstler in der digitalen Welt.</p>
-          <div class="price">Ab 30 CHF/Session</div>
+          <div class="price"><i class="fas fa-tag"></i> Ab 30 CHF/Session</div>
         </div>
         
         <div class="service">
           <span class="service-icon">🌟</span>
           <h3>Personal Branding</h3>
           <p>Helfe Künstlern beim Aufbau einer authentischen Online-Präsenz und beim Finden ihrer Zielgruppe.</p>
-          <div class="price">Ab 35 CHF/Session</div>
+          <div class="price"><i class="fas fa-tag"></i> Ab 35 CHF/Session</div>
         </div>
       </div>
       
       <div class="contacts">
         <a href="https://t.me/dmziak" class="contact-btn" target="_blank">
-          📱 Telegram
+          <i class="fab fa-telegram"></i> Telegram
         </a>
         <a href="https://instagram.com/dimmiziak" class="contact-btn" target="_blank">
-          📸 Instagram
+          <i class="fab fa-instagram"></i> Instagram
         </a>
         <a href="mailto:dimmi@example.com" class="contact-btn">
-          ✉️ Email
+          <i class="fas fa-envelope"></i> Email
         </a>
       </div>
       
       <div class="testimonial">
-        "Schaffe mutig. Lerne mit Neugier. Erforsche dich selbst."
+        Schaffe mutig. Lerne mit Neugier. Erforsche dich selbst.
       </div>
     </div>
   </div>
@@ -475,6 +701,7 @@
       const taglines = {
         'en': 'Creative Learning Guide — Art, Language, Growth',
         'ru': 'Проводник творческого обучения — Искусство, Язык, Рост',
+        'uk': 'Провідник творчого навчання — Мистецтво, Мова, Розвиток',
         'de': 'Kreativer Lernbegleiter — Kunst, Sprache, Wachstum'
       };
       
